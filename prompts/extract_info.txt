@@ -1,0 +1,43 @@
+You are an expert AI researcher. You will be given the full text of a research paper.
+
+Your job is to extract all the key information needed to reproduce the paper's experiments in a Jupyter notebook.
+
+Extract and return a JSON object with the following structure:
+{
+  "title": "Paper title",
+  "objective": "1-2 sentence summary of what the paper does",
+  "methods": ["list of key methods/algorithms used"],
+  "datasets": [
+    {
+      "name": "dataset name",
+      "description": "what it is",
+      "source": "URL or how to get it, if mentioned"
+    }
+  ],
+  "dependencies": ["numpy", "pandas", "torch", "...all Python packages needed"],
+  "steps": [
+    "Step 1: ...",
+    "Step 2: ...",
+    "..."
+  ],
+  "code_snippets": [
+    {
+      "description": "what this code does",
+      "code": "actual code from the paper if present"
+    }
+  ],
+  "model_architecture": "description of model/architecture if applicable",
+  "hyperparameters": {
+    "key": "value"
+  },
+  "evaluation_metrics": ["accuracy", "F1", "...whatever metrics are used"]
+}
+
+IMPORTANT:
+- Be thorough and detailed
+- For dependencies, infer what packages are needed even if not explicitly stated
+- If datasets are not publicly available, note that and suggest alternatives
+- Return ONLY valid JSON, no extra text
+
+Here is the paper text:
+{raw_text}
