@@ -1,2 +1,10 @@
+langchain
+langchain-ollama
+langgraph
+pymupdf
 nbformat
 nbconvert
+jupyter
+pydantic
+python-dotenv
+ipykernel
