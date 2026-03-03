@@ -1,9 +1,3 @@
-# ## Title & Description
-# This script implements the Transformer model from the paper "Attention Is All You Need".
-# It includes components like scaled dot-product attention, multi-head attention,
-# positional encoding, and training setup for machine translation tasks.
-
-# ## 1. Install Dependencies
 import subprocess, sys
 
 packages = [
@@ -62,24 +56,24 @@ if torch.cuda.is_available():
 
 # ## 3. Configuration & Hyperparameters
 config = {
-    "N": 6,              # Number of encoder/decoder layers
-    "d_model": 512,      # Model dimension
-    "d_ff": 2048,        # Feed forward network hidden size
-    "h": 8,              # Number of attention heads
-    "d_k": 64,           # Key/query dimension per head
-    "d_v": 64,           # Value dimension per head
+    "N": 2,              # Reduced for faster execution
+    "d_model": 128,      # Reduced for faster execution
+    "d_ff": 512,         # Reduced for faster execution
+    "h": 4,              # Reduced for faster execution
+    "d_k": 32,           # Key/query dimension per head
+    "d_v": 32,           # Value dimension per head
     "dropout_rate": 0.1,
     "label_smoothing": 0.1,
-    "warmup_steps": 4000,
+    "warmup_steps": 1000,
     "beta1": 0.9,
     "beta2": 0.98,
     "epsilon": 1e-9,
     "beam_size": 4,
     "length_penalty_alpha": 0.6,
-    "vocab_size": 10000,  # For dummy data
-    "max_seq_len": 50,    # Max sequence length
-    "batch_size": 32,
-    "epochs": 5,
+    "vocab_size": 5000,  # For dummy data
+    "max_seq_len": 30,   # Max sequence length
+    "batch_size": 16,    # Reduced for memory efficiency
+    "epochs": 2,         # Reduced for faster execution
     "device": "cuda" if torch.cuda.is_available() else "cpu"
 }
 
@@ -87,7 +81,7 @@ print(f"Using device: {config['device']}")
 
 # ## 4. Data Loading
 class DummyTranslationDataset(Dataset):
-    def __init__(self, size=1000, vocab_size=10000, max_seq_len=50):
+    def __init__(self, size=500, vocab_size=5000, max_seq_len=30):
         self.size = size
         self.vocab_size = vocab_size
         self.max_seq_len = max_seq_len
@@ -97,8 +91,8 @@ class DummyTranslationDataset(Dataset):
     
     def __getitem__(self, idx):
         # Generate random source and target sequences
-        src_len = np.random.randint(10, self.max_seq_len)
-        tgt_len = np.random.randint(10, self.max_seq_len)
+        src_len = np.random.randint(5, self.max_seq_len)
+        tgt_len = np.random.randint(5, self.max_seq_len)
         
         src = torch.randint(1, self.vocab_size, (src_len,))
         tgt = torch.randint(1, self.vocab_size, (tgt_len,))
@@ -125,13 +119,13 @@ def collate_fn(batch):
 
 try:
     # Try to load real dataset here if available
-    train_dataset = DummyTranslationDataset(size=1000)
-    val_dataset = DummyTranslationDataset(size=200)
+    train_dataset = DummyTranslationDataset(size=500)
+    val_dataset = DummyTranslationDataset(size=100)
     print("Loaded dummy dataset successfully")
 except Exception as e:
     print(f"Failed to load dataset: {e}")
-    train_dataset = DummyTranslationDataset(size=1000)
-    val_dataset = DummyTranslationDataset(size=200)
+    train_dataset = DummyTranslationDataset(size=500)
+    val_dataset = DummyTranslationDataset(size=100)
 
 train_loader = DataLoader(train_dataset, batch_size=config["batch_size"], shuffle=True, collate_fn=collate_fn)
 val_loader = DataLoader(val_dataset, batch_size=config["batch_size"], shuffle=False, collate_fn=collate_fn)
@@ -360,7 +354,7 @@ class CustomSchedule:
 
 criterion = nn.CrossEntropyLoss(ignore_index=0, label_smoothing=config["label_smoothing"])
 optimizer = optim.Adam(model.parameters(), lr=0, betas=(config["beta1"], config["beta2"]), eps=config["epsilon"])
-scheduler = CustomSchedule(config["d_model"], config["warmup_steps"])
+lr_scheduler = CustomSchedule(config["d_model"], config["warmup_steps"])
 
 def train_epoch(model, dataloader, criterion, optimizer, scheduler, device):
     model.train()
@@ -379,7 +373,10 @@ def train_epoch(model, dataloader, criterion, optimizer, scheduler, device):
         
         loss.backward()
         optimizer.step()
-        scheduler.step(i+1)
+        
+        # Update learning rate
+        for param_group in optimizer.param_groups:
+            param_group['lr'] = scheduler.step(num_batches + 1)
         
         total_loss += loss.item()
         num_batches += 1
@@ -417,7 +414,7 @@ val_losses = []
 
 for epoch in range(config["epochs"]):
     print(f"\nEpoch {epoch+1}/{config['epochs']}")
-    train_loss = train_epoch(model, train_loader, criterion, optimizer, scheduler, config["device"])
+    train_loss = train_epoch(model, train_loader, criterion, optimizer, lr_scheduler, config["device"])
     val_loss = validate(model, val_loader, criterion, config["device"])
     
     train_losses.append(train_loss)

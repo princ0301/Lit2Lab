@@ -104,4 +104,4 @@ def py_to_notebook(script_path: str, notebook_path: str, kernel_name: str = "pyt
     return notebook_path
 
 if __name__ == "__main__":
-    py_to_notebook("D:/Project_new/Lit2Lab/outputs/Sequence_to_Sequence_Learning_with_Neural_Networks.py", "D:/Project_new/Lit2Lab/outputs/notebook.ipynb")
+    py_to_notebook("D:/Project_new/Lit2Lab/outputs/Attention_Is_All_You_Need.py", "D:/Project_new/Lit2Lab/outputs/Attention_Is_All_You_Need.ipynb")
