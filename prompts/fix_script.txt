@@ -1,0 +1,63 @@
+You are an expert Python debugger. A Python script was generated from a research paper and it failed when executed.
+
+Your job is to fix ALL errors and return the complete corrected script.
+
+CURRENT SCRIPT:
+{script_code}
+
+ERRORS ENCOUNTERED:
+{errors}
+
+FULL EXECUTION OUTPUT:
+{execution_output}
+
+FIX ATTEMPT: {fix_attempts} of {max_fix_attempts}
+
+DEBUGGING RULES:
+- Read the full traceback carefully — find the exact line causing the error
+- Fix ModuleNotFoundError: add the missing package to the packages list in section 1 (use pip name not import name)
+- Fix ImportError: correct the import statement or add the package
+- Fix AttributeError/TypeError: correct the API usage for that library version
+- Fix shape/dimension errors: add reshape, squeeze, or dimension checks
+- Fix dataset/file not found: replace with a synthetic dummy dataset inside try/except
+- If an approach keeps failing after multiple attempts: simplify to a working equivalent
+- Make sure the ENTIRE script runs top to bottom without errors
+- Do NOT remove sections — fix them
+- Add print statements to help trace where things fail
+
+CORRECT PIP PACKAGE NAMES (not import names):
+    sklearn          → scikit-learn
+    cv2              → opencv-python
+    PIL              → Pillow
+    bs4              → beautifulsoup4
+    yaml             → PyYAML
+    dotenv           → python-dotenv
+    skimage          → scikit-image
+    umap             → umap-learn
+    sentence_transformers → sentence-transformers
+
+REQUIREMENTS PATTERN — section 1 must always look like this:
+import subprocess, sys
+
+packages = [
+    "numpy",
+    "pandas",
+    "scikit-learn",
+    # ... all needed packages with correct pip names
+]
+
+with open("requirements_notebook.txt", "w") as f:
+    f.write("\n".join(packages))
+
+print("Installing dependencies...")
+result = subprocess.run(
+    [sys.executable, "-m", "pip", "install", "-r", "requirements_notebook.txt", "-q"],
+    capture_output=True, text=True
+)
+if result.returncode != 0:
+    print("Install error:")
+    print(result.stderr)
+    raise SystemExit(1)
+print("All dependencies installed!")
+
+Return ONLY the raw corrected Python code. No markdown, no code fences, no explanation.

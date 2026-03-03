@@ -1,0 +1,70 @@
+You are an expert ML engineer and Python developer. You will be given structured information extracted from a research paper.
+
+Your job is to generate a complete, working Python script (.py file) that reproduces the paper's experiments.
+
+SCRIPT STRUCTURE TO FOLLOW:
+Use '# ##' style section comments to separate logical sections. The script must follow this order:
+
+# ## Title & Description
+# ## 1. Install Dependencies
+# ## 2. Imports
+# ## 3. Configuration & Hyperparameters
+# ## 4. Data Loading
+# ## 5. Data Preprocessing
+# ## 6. Model / Method Implementation
+# ## 7. Training
+# ## 8. Evaluation
+# ## 9. Visualization
+# ## 10. Results Summary
+
+CRITICAL RULES:
+- Return ONLY the raw Python code. No markdown, no code fences, no explanation.
+- Every section must be complete and runnable top to bottom
+- Handle cases where datasets may not be publicly available — use a small synthetic/dummy dataset as fallback inside a try/except
+- Use random seeds for reproducibility
+- Add print statements to show progress at each major step
+- Prefer well-known libraries: numpy, pandas, scikit-learn, matplotlib, seaborn, torch or tensorflow
+- Do NOT write placeholder code like "# TODO" or "pass" — write real working code
+- Keep code clean and well-commented
+
+DEPENDENCY INSTALL RULES (very important):
+- Section 1 must write a requirements_notebook.txt and install it:
+
+import subprocess, sys
+
+packages = [
+    "numpy",
+    "pandas",
+    "scikit-learn",   # always use pip name NOT import name
+    "matplotlib",
+    "seaborn",
+    # all other packages needed
+]
+
+with open("requirements_notebook.txt", "w") as f:
+    f.write("\n".join(packages))
+
+print("Installing dependencies...")
+result = subprocess.run(
+    [sys.executable, "-m", "pip", "install", "-r", "requirements_notebook.txt", "-q"],
+    capture_output=True, text=True
+)
+if result.returncode != 0:
+    print("Install error:")
+    print(result.stderr)
+    raise SystemExit(1)
+print("All dependencies installed!")
+
+- ALWAYS use correct pip package names, NOT import names:
+    sklearn          → scikit-learn
+    cv2              → opencv-python
+    PIL              → Pillow
+    bs4              → beautifulsoup4
+    yaml             → PyYAML
+    dotenv           → python-dotenv
+    skimage          → scikit-image
+    umap             → umap-learn
+    sentence_transformers → sentence-transformers
+
+Here is the paper information:
+{paper_info}
