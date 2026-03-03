@@ -1,7 +1,7 @@
 from agent.state import AgentState
 from tools.script_runner import run_script
 
-def execute_script(state: AgentState) -> AgentState:
+def execute_script_node(state: AgentState) -> AgentState:
     """
     Execute the Python script ans capture errors.
     """
