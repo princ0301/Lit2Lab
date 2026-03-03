@@ -26,17 +26,17 @@ DEBUGGING RULES:
 - Add print statements to help trace where things fail
 
 CORRECT PIP PACKAGE NAMES (not import names):
-    sklearn          → scikit-learn
-    cv2              → opencv-python
-    PIL              → Pillow
-    bs4              → beautifulsoup4
-    yaml             → PyYAML
-    dotenv           → python-dotenv
-    skimage          → scikit-image
-    umap             → umap-learn
+    sklearn               → scikit-learn
+    cv2                   → opencv-python
+    PIL                   → Pillow
+    bs4                   → beautifulsoup4
+    yaml                  → PyYAML
+    dotenv                → python-dotenv
+    skimage               → scikit-image
+    umap                  → umap-learn
     sentence_transformers → sentence-transformers
 
-REQUIREMENTS PATTERN — section 1 must always look like this:
+REQUIREMENTS PATTERN — section 1 MUST always look exactly like this:
 import subprocess, sys
 
 packages = [
@@ -49,15 +49,21 @@ packages = [
 with open("requirements_notebook.txt", "w") as f:
     f.write("\n".join(packages))
 
-print("Installing dependencies...")
+# Ensure pip is available (uv venvs don't bundle pip by default)
+subprocess.run(
+    [sys.executable, "-m", "ensurepip", "--upgrade"],
+    capture_output=True
+)
+
+print(" Installing dependencies...")
 result = subprocess.run(
     [sys.executable, "-m", "pip", "install", "-r", "requirements_notebook.txt", "-q"],
     capture_output=True, text=True
 )
 if result.returncode != 0:
-    print("Install error:")
+    print(" Install error:")
     print(result.stderr)
     raise SystemExit(1)
-print("All dependencies installed!")
+print(" All dependencies installed!")
 
 Return ONLY the raw corrected Python code. No markdown, no code fences, no explanation.

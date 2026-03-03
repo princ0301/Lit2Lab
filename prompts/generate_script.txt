@@ -27,15 +27,17 @@ CRITICAL RULES:
 - Do NOT write placeholder code like "# TODO" or "pass" — write real working code
 - Keep code clean and well-commented
 
-DEPENDENCY INSTALL RULES (very important):
-- Section 1 must write a requirements_notebook.txt and install it:
+DEPENDENCY INSTALL RULES (CRITICAL — read carefully):
+- The venv running this script does NOT have pip installed
+- You MUST use 'pip install' via subprocess with sys.executable — BUT first ensure pip exists
+- Section 1 must look EXACTLY like this:
 
 import subprocess, sys
 
 packages = [
     "numpy",
     "pandas",
-    "scikit-learn",   # always use pip name NOT import name
+    "scikit-learn",
     "matplotlib",
     "seaborn",
     # all other packages needed
@@ -44,26 +46,32 @@ packages = [
 with open("requirements_notebook.txt", "w") as f:
     f.write("\n".join(packages))
 
-print("Installing dependencies...")
+# Ensure pip is available (uv venvs don't bundle pip by default)
+subprocess.run(
+    [sys.executable, "-m", "ensurepip", "--upgrade"],
+    capture_output=True
+)
+
+print(" Installing dependencies...")
 result = subprocess.run(
     [sys.executable, "-m", "pip", "install", "-r", "requirements_notebook.txt", "-q"],
     capture_output=True, text=True
 )
 if result.returncode != 0:
-    print("Install error:")
+    print(" Install error:")
     print(result.stderr)
     raise SystemExit(1)
-print("All dependencies installed!")
+print(" All dependencies installed!")
 
 - ALWAYS use correct pip package names, NOT import names:
-    sklearn          → scikit-learn
-    cv2              → opencv-python
-    PIL              → Pillow
-    bs4              → beautifulsoup4
-    yaml             → PyYAML
-    dotenv           → python-dotenv
-    skimage          → scikit-image
-    umap             → umap-learn
+    sklearn               → scikit-learn
+    cv2                   → opencv-python
+    PIL                   → Pillow
+    bs4                   → beautifulsoup4
+    yaml                  → PyYAML
+    dotenv                → python-dotenv
+    skimage               → scikit-image
+    umap                  → umap-learn
     sentence_transformers → sentence-transformers
 
 Here is the paper information:
