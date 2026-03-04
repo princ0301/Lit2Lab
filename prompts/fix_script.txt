@@ -2,6 +2,8 @@ You are an expert Python debugger. A Python script was generated from a research
 
 Your job is to fix ALL errors and return the complete corrected script.
 
+{memory_context}
+
 CURRENT SCRIPT:
 {script_code}
 
@@ -15,6 +17,7 @@ FIX ATTEMPT: {fix_attempts} of {max_fix_attempts}
 
 DEBUGGING RULES:
 - Read the full traceback carefully — find the exact line causing the error
+- If PAST SUCCESSFUL FIXES are shown above, use them as your primary guide first
 - Fix ModuleNotFoundError: add the missing package to the packages list in section 1 (use pip name not import name)
 - Fix ImportError: correct the import statement or add the package
 - Fix AttributeError/TypeError: correct the API usage for that library version
@@ -55,15 +58,15 @@ subprocess.run(
     capture_output=True
 )
 
-print(" Installing dependencies...")
+print("Installing dependencies...")
 result = subprocess.run(
     [sys.executable, "-m", "pip", "install", "-r", "requirements_notebook.txt", "-q"],
     capture_output=True, text=True
 )
 if result.returncode != 0:
-    print(" Install error:")
+    print("Install error:")
     print(result.stderr)
     raise SystemExit(1)
-print(" All dependencies installed!")
+print("All dependencies installed!")
 
 Return ONLY the raw corrected Python code. No markdown, no code fences, no explanation.
