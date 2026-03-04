@@ -15,7 +15,7 @@ def _ensure_pip_available(python: str) -> None:
         capture_output=True, timeout=10
     )
     if result.returncode == 0:
-        return  # pip already available
+        return   
 
     print("[script_runner] pip not found in venv — bootstrapping via uv pip ...")
     if _uv_available():
@@ -24,11 +24,11 @@ def _ensure_pip_available(python: str) -> None:
             capture_output=True, text=True, timeout=60
         )
         if r.returncode == 0:
-            print("[script_runner] ✅ pip bootstrapped successfully")
+            print("[script_runner] pip bootstrapped successfully")
         else:
-            print(f"[script_runner] ⚠️  pip bootstrap failed: {r.stderr.strip()}")
+            print(f"[script_runner]  pip bootstrap failed: {r.stderr.strip()}")
     else:
-        print("[script_runner] ⚠️  uv not available, cannot bootstrap pip")
+        print("[script_runner]  uv not available, cannot bootstrap pip")
 
 
 def run_script(script_path: str, timeout: int = 300) -> Tuple[bool, list, str]:
@@ -42,8 +42,7 @@ def run_script(script_path: str, timeout: int = 300) -> Tuple[bool, list, str]:
         - full_output: combined stdout + stderr for LLM context
     """
     python = get_agent_python()
-
-    # Make sure pip is available inside the venv before running any script
+ 
     _ensure_pip_available(python)
 
     print(f"[script_runner] Using python: {python}")
@@ -67,19 +66,19 @@ def run_script(script_path: str, timeout: int = 300) -> Tuple[bool, list, str]:
             full_output += f"--- STDERR ---\n{stderr}\n"
 
         if result.returncode == 0:
-            print(f"[script_runner] ✅ Script exited cleanly (code 0)")
+            print(f"[script_runner] Script exited cleanly (code 0)")
             return True, [], full_output
         else:
-            print(f"[script_runner] ❌ Script exited with code {result.returncode}")
+            print(f"[script_runner] Script exited with code {result.returncode}")
             errors = [stderr] if stderr else [f"Exit code {result.returncode} with no stderr"]
             return False, errors, full_output
 
     except subprocess.TimeoutExpired:
         error = f"Script timed out after {timeout} seconds"
-        print(f"[script_runner] ⏰ {error}")
+        print(f"[script_runner] {error}")
         return False, [error], error
 
     except Exception as e:
         error = f"Unexpected error running script: {str(e)}"
-        print(f"[script_runner] ❌ {error}")
+        print(f"[script_runner] {error}")
         return False, [error], error
