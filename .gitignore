@@ -1,3 +1,6 @@
 .venv
 .env
 transformer_checkpoint.pth
+__pycache__/
+*.py[cod]
+*$py.class

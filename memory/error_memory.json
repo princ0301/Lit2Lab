@@ -1,0 +1,24 @@
+[
+  {
+    "id": "ddcfcdd7-47da-454c-ad92-edebab1cf869",
+    "timestamp": "2026-03-04T13:07:21.589515",
+    "error_signature": "Exit code 1 with no stderr",
+    "error_type": "UnknownError",
+    "fix_summary": "Changes: return self.criterion(x, true_dist) | x = x + self.pe[:, :x.size(1)] | print(\"All dependencies installed!\") | print(\"Installing dependencies...\") | print(\"Install error:\")",
+    "fixed_code_snippet": "import subprocess, sys\n\npackages = [\n    \"torch\",\n    \"numpy\",\n    \"pandas\",\n    \"matplotlib\",\n    \"seaborn\",\n    \"scikit-learn\"\n]\n\nwith open(\"requirements_notebook.txt\", \"w\") as f:\n    f.write(\"\\n\".join(packages))\n\n# Ensure pip is available (uv venvs don't bundle pip by default)\nsubprocess.run(\n    [sys.executable, \"-m\", \"ensurepip\", \"--upgrade\"],\n    capture_output=True\n)\n\nprint(\"Installing dependencies...\")\nresult = subprocess.run(\n    [sys.executable, \"-m\", \"pip\", \"install\", \"-r\", \"requireme",
+    "was_successful": false,
+    "paper_title": "Attention Is All You Need",
+    "fix_attempt_number": 1
+  },
+  {
+    "id": "2cfa8ab2-d885-4077-ba85-5ff686598ab4",
+    "timestamp": "2026-03-04T13:11:30.328549",
+    "error_signature": "",
+    "error_type": "UnknownError",
+    "fix_summary": "Fixed after 1 attempt(s) — script ran successfully",
+    "fixed_code_snippet": "import subprocess, sys\n\npackages = [\n    \"torch\",\n    \"numpy\",\n    \"pandas\",\n    \"matplotlib\",\n    \"seaborn\",\n    \"scikit-learn\"\n]\n\nwith open(\"requirements_notebook.txt\", \"w\") as f:\n    f.write(\"\\n\".join(packages))\n\n# Ensure pip is available (uv venvs don't bundle pip by default)\nsubprocess.run(\n    [sys.executable, \"-m\", \"ensurepip\", \"--upgrade\"],\n    capture_output=True\n)\n\nprint(\"Installing dependencies...\")\nresult = subprocess.run(\n    [sys.executable, \"-m\", \"pip\", \"install\", \"-r\", \"requireme",
+    "was_successful": true,
+    "paper_title": "Attention Is All You Need",
+    "fix_attempt_number": 1
+  }
+]
