@@ -8,3 +8,4 @@ jupyter
 pydantic
 python-dotenv
 ipykernel
+rich
