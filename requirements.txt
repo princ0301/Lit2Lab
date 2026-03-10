@@ -9,3 +9,6 @@ pydantic
 python-dotenv
 ipykernel
 rich
+tavily-python 
+duckduckgo-search
+ddgs

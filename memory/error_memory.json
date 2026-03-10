@@ -20,5 +20,38 @@
     "was_successful": true,
     "paper_title": "Attention Is All You Need",
     "fix_attempt_number": 1
+  },
+  {
+    "id": "eb8d30fd-35e0-49a5-9c7b-18e7ff4dc0ae",
+    "timestamp": "2026-03-10T23:03:21.807869",
+    "error_signature": "File \"D:\\Project_new\\Lit2Lab\\.agent_venv\\Lib\\site-packages\\torch\\nn\\modules\\rnn.py\", line 349, in check_hidden_size | raise RuntimeError(msg.format(expected_hidden_size, list(hx.size()))) | RuntimeError: Expected hidden[0] size (2, 1, 256), got [2, 32, 256]",
+    "error_type": "RuntimeError",
+    "fix_summary": "Changes: import itertools | decoder_input = topi.detach().transpose(0, 1)",
+    "fixed_code_snippet": "import subprocess, sys\n\npackages = [\n    \"numpy\",\n    \"torch\",\n    \"scikit-learn\",\n    \"matplotlib\",\n    \"pandas\",\n    \"nltk\",\n    \"sacrebleu\"\n]\n\nwith open(\"requirements_notebook.txt\", \"w\") as f:\n    f.write(\"\\n\".join(packages))\n\n# Ensure pip is available (uv venvs don't bundle pip by default)\nsubprocess.run(\n    [sys.executable, \"-m\", \"ensurepip\", \"--upgrade\"],\n    capture_output=True\n)\n\nprint(\" Installing dependencies...\")\nresult = subprocess.run(\n    [sys.executable, \"-m\", \"pip\", \"install\", \"",
+    "was_successful": false,
+    "paper_title": "Sequence to Sequence Learning with Neural Networks",
+    "fix_attempt_number": 1
+  },
+  {
+    "id": "0c8a7f48-fe60-4ebd-9f68-be87620ef28f",
+    "timestamp": "2026-03-10T23:06:35.555773",
+    "error_signature": "File \"D:\\Project_new\\Lit2Lab\\.agent_venv\\Lib\\site-packages\\torch\\nn\\modules\\rnn.py\", line 349, in check_hidden_size | raise RuntimeError(msg.format(expected_hidden_size, list(hx.size()))) | RuntimeError: Expected hidden[0] size (2, 1, 256), got [2, 32, 256]",
+    "error_type": "RuntimeError",
+    "fix_summary": "Changes: # We need to adjust the hidden state to match decoder's expected input | h, c = encoder_hidden | if isinstance(encoder_hidden, tuple): | # Set initial decoder hidden state to match expected dimensions",
+    "fixed_code_snippet": "import subprocess, sys\n\npackages = [\n    \"numpy\",\n    \"torch\",\n    \"scikit-learn\",\n    \"matplotlib\",\n    \"pandas\",\n    \"nltk\",\n    \"sacrebleu\"\n]\n\nwith open(\"requirements_notebook.txt\", \"w\") as f:\n    f.write(\"\\n\".join(packages))\n\n# Ensure pip is available (uv venvs don't bundle pip by default)\nsubprocess.run(\n    [sys.executable, \"-m\", \"ensurepip\", \"--upgrade\"],\n    capture_output=True\n)\n\nprint(\" Installing dependencies...\")\nresult = subprocess.run(\n    [sys.executable, \"-m\", \"pip\", \"install\", \"",
+    "was_successful": false,
+    "paper_title": "Sequence to Sequence Learning with Neural Networks",
+    "fix_attempt_number": 2
+  },
+  {
+    "id": "53f8682f-54a6-4fa0-866f-d1157ab31288",
+    "timestamp": "2026-03-10T23:14:00.673044",
+    "error_signature": "File \"D:\\Project_new\\Lit2Lab\\.agent_venv\\Lib\\site-packages\\torch\\nn\\modules\\rnn.py\", line 349, in check_hidden_size | raise RuntimeError(msg.format(expected_hidden_size, list(hx.size()))) | RuntimeError: Expected hidden[0] size (2, 1, 256), got [2, 32, 256]",
+    "error_type": "RuntimeError",
+    "fix_summary": "Changes: idx = ni[i].item() | ni = topi.squeeze().detach()  # detach from history as input | decoder_input = ni.unsqueeze(0).unsqueeze(0)  # [1, batch_size] | for i in range(ni.size(0)):",
+    "fixed_code_snippet": "import subprocess, sys\n\npackages = [\n    \"numpy\",\n    \"torch\",\n    \"scikit-learn\",\n    \"matplotlib\",\n    \"pandas\",\n    \"nltk\",\n    \"sacrebleu\"\n]\n\nwith open(\"requirements_notebook.txt\", \"w\") as f:\n    f.write(\"\\n\".join(packages))\n\n# Ensure pip is available (uv venvs don't bundle pip by default)\nsubprocess.run(\n    [sys.executable, \"-m\", \"ensurepip\", \"--upgrade\"],\n    capture_output=True\n)\n\nprint(\" Installing dependencies...\")\nresult = subprocess.run(\n    [sys.executable, \"-m\", \"pip\", \"install\", \"",
+    "was_successful": false,
+    "paper_title": "Sequence to Sequence Learning with Neural Networks",
+    "fix_attempt_number": 3
   }
 ]

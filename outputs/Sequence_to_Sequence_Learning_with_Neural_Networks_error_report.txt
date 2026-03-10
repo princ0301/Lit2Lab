@@ -1,0 +1,106 @@
+Script:       outputs/Sequence_to_Sequence_Learning_with_Neural_Networks.py
+Fix attempts: 3 / 3
+Status:       FAILED - unresolved errors remain
+
+============================================================
+ERRORS:
+============================================================
+
+--- Error 1 ---
+Traceback (most recent call last):
+  File "D:\Project_new\Lit2Lab\outputs\Sequence_to_Sequence_Learning_with_Neural_Networks.py", line 485, in <module>
+    bleu_score, sample_preds, sample_refs = evaluate_model(model, test_loader, eng_vocab, fr_vocab)
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project_new\Lit2Lab\outputs\Sequence_to_Sequence_Learning_with_Neural_Networks.py", line 451, in evaluate_model
+    decoder_output, decoder_hidden = model.decoder(decoder_input, decoder_hidden)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project_new\Lit2Lab\.agent_venv\Lib\site-packages\torch\nn\modules\module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project_new\Lit2Lab\.agent_venv\Lib\site-packages\torch\nn\modules\module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project_new\Lit2Lab\outputs\Sequence_to_Sequence_Learning_with_Neural_Networks.py", line 261, in forward
+    lstm_output, hidden = self.lstm(embedded, last_hidden)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project_new\Lit2Lab\.agent_venv\Lib\site-packages\torch\nn\modules\module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project_new\Lit2Lab\.agent_venv\Lib\site-packages\torch\nn\modules\module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project_new\Lit2Lab\.agent_venv\Lib\site-packages\torch\nn\modules\rnn.py", line 1137, in forward
+    self.check_forward_args(input, hx, batch_sizes)
+  File "D:\Project_new\Lit2Lab\.agent_venv\Lib\site-packages\torch\nn\modules\rnn.py", line 1016, in check_forward_args
+    self.check_hidden_size(
+  File "D:\Project_new\Lit2Lab\.agent_venv\Lib\site-packages\torch\nn\modules\rnn.py", line 349, in check_hidden_size
+    raise RuntimeError(msg.format(expected_hidden_size, list(hx.size())))
+RuntimeError: Expected hidden[0] size (2, 1, 256), got [2, 32, 256]
+
+============================================================
+LAST EXECUTION OUTPUT:
+============================================================
+--- STDOUT ---
+Installing dependencies...
+ All dependencies installed!
+Using device: cpu
+Loaded 1000 sentence pairs
+Processing English sentences...
+English vocabulary size: 37
+Processing French sentences...
+French vocabulary size: 38
+Training samples: 900, Test samples: 100
+Model created with 2134310 parameters
+Starting training...
+Epoch 1/5
+Batch 0, Loss: -0.0107
+Average Loss: -29.0439
+
+Epoch 2/5
+Batch 0, Loss: -8.1423
+Average Loss: -77.0446
+
+Epoch 3/5
+Batch 0, Loss: -14.3609
+Average Loss: -119.5820
+
+Epoch 4/5
+Batch 0, Loss: -20.2196
+Average Loss: -161.4713
+
+Epoch 5/5
+Batch 0, Loss: -26.4301
+Average Loss: -203.0168
+
+Training completed.
+Evaluating model...
+--- STDERR ---
+Traceback (most recent call last):
+  File "D:\Project_new\Lit2Lab\outputs\Sequence_to_Sequence_Learning_with_Neural_Networks.py", line 485, in <module>
+    bleu_score, sample_preds, sample_refs = evaluate_model(model, test_loader, eng_vocab, fr_vocab)
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project_new\Lit2Lab\outputs\Sequence_to_Sequence_Learning_with_Neural_Networks.py", line 451, in evaluate_model
+    decoder_output, decoder_hidden = model.decoder(decoder_input, decoder_hidden)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project_new\Lit2Lab\.agent_venv\Lib\site-packages\torch\nn\modules\module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project_new\Lit2Lab\.agent_venv\Lib\site-packages\torch\nn\modules\module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project_new\Lit2Lab\outputs\Sequence_to_Sequence_Learning_with_Neural_Networks.py", line 261, in forward
+    lstm_output, hidden = self.lstm(embedded, last_hidden)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project_new\Lit2Lab\.agent_venv\Lib\site-packages\torch\nn\modules\module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project_new\Lit2Lab\.agent_venv\Lib\site-packages\torch\nn\modules\module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project_new\Lit2Lab\.agent_venv\Lib\site-packages\torch\nn\modules\rnn.py", line 1137, in forward
+    self.check_forward_args(input, hx, batch_sizes)
+  File "D:\Project_new\Lit2Lab\.agent_venv\Lib\site-packages\torch\nn\modules\rnn.py", line 1016, in check_forward_args
+    self.check_hidden_size(
+  File "D:\Project_new\Lit2Lab\.agent_venv\Lib\site-packages\torch\nn\modules\rnn.py", line 349, in check_hidden_size
+    raise RuntimeError(msg.format(expected_hidden_size, list(hx.size())))
+RuntimeError: Expected hidden[0] size (2, 1, 256), got [2, 32, 256]
